@@ -6,7 +6,7 @@ pipeline {
         }
     }
     environment {
-        DIGITALOCEAN_TOKEN = credentials('digitalocean-token')
+        DIGITALOCEAN_TOKEN = credentials('dop_v1_33f3baa138b8019c5d87dea4f0777d2a0e965f1295530e5de3f67bbd6e422a4b')
         SSH_PRIVATE_KEY    = credentials('ssh-private-key')
     }
     stages {
