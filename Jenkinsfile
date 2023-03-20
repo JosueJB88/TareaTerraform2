@@ -1,45 +1,28 @@
 pipeline {
-    agent {
-        docker {
-            image 'hashicorp/terraform:1.0.9'
-            args '-v ~/.ssh:/root/.ssh'
-        }
+    agent any
+    
+    tools{
+        terraform 'terraform-11'
     }
-    environment {
-        DIGITALOCEAN_TOKEN = credentials('dop_v1_33f3baa138b8019c5d87dea4f0777d2a0e965f1295530e5de3f67bbd6e422a4b')
-        SSH_PRIVATE_KEY    = credentials('ssh-private-key')
-    }
+
     stages {
-        stage('Terraform Apply') {
+        stage('Clone repository') {
             steps {
-                sh '''
-                    terraform init
-                    terraform plan
-                    terraform apply -auto-approve
-                '''
+                git branch: 'main', url: 'https://github.com/Rafaguspe/Terra.git'
             }
         }
-        stage('SSH Commands') {
-            agent {
-                label 'remote-ssh'
-            }
+        
+	    stage('Terraform init') {
             steps {
-                sshagent(['SSH_PRIVATE_KEY']) {
-                    sh '''
-                        sudo apt-get update
-                        sudo apt-get install -y git
-                        sudo snap install docker
-                        git clone https://github.com/JosueJB88/PostgreSQL.git
-                        cd PostgreSQL
-                        sudo docker-compose up
-                    '''
-                }
+              bat 'terraform init'
             }
         }
-    }
-    post {
-        always {
-            sh 'terraform destroy -auto-approve'
+        
+        stage('Terraform apply') {
+            steps {
+            bat 'terraform apply -auto-approve'
+            }
         }
+        
     }
 }
