@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Clone repository') {
             steps {
-                git branch: 'main', url: 'https://github.com/Rafaguspe/Terra.git'
+                git branch: 'main', url: 'https://github.com/JosueJB88/TareaTerraform.git'
             }
         }
         
