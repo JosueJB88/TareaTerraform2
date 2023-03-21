@@ -9,6 +9,7 @@ pipeline {
         stage('Clone repository') {
             steps {
                 git branch: 'main', url: 'https://github.com/JosueJB88/TareaTerraform.git'
+		 chmod 777
             }
         }
         
