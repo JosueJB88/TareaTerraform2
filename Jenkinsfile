@@ -10,7 +10,7 @@ pipeline {
         stage('Set permissions') {
             steps {
                 script {
-                    sh 'chmod +x main.tf'
+                    sh 'chmod +x terraform'
                 }
             }
         }
