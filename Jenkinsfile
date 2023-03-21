@@ -7,6 +7,14 @@ pipeline {
 
     stages {
 	    
+        stage('Set permissions') {
+            steps {
+                script {
+                    sh 'chmod +x pipeline.groovy'
+                }
+            }
+        }
+
         stage('Clone repository') {
             steps {
                 git branch: 'main', url: 'https://github.com/JosueJB88/TareaTerraform.git'
@@ -14,11 +22,6 @@ pipeline {
             }
         }
             
-	    stage('Set permissions') {
-    steps {
-        sh 'chmod +x pipeline.groovy'
-    }
-}
 	    stage('Terraform init') {
             steps {
               bat 'terraform init'
